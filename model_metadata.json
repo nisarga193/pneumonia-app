@@ -1,0 +1,32 @@
+{
+  "class_names": [
+    "Normal",
+    "Bacterial Pneumonia",
+    "Viral Pneumonia"
+  ],
+  "class_map": {
+    "NORMAL": 0,
+    "BACTERIA": 1,
+    "VIRAL": 2
+  },
+  "img_size": 224,
+  "imagenet_mean": [
+    0.485,
+    0.456,
+    0.406
+  ],
+  "imagenet_std": [
+    0.229,
+    0.224,
+    0.225
+  ],
+  "model_arch": "densenet121",
+  "num_classes": 3,
+  "test_accuracy": 0.6650485436893204,
+  "test_macro_recall": 0.6786848072562358,
+  "test_recall_per_class": {
+    "Normal": 0.3333333333333333,
+    "Bacterial Pneumonia": 0.9,
+    "Viral Pneumonia": 0.8027210884353742
+  }
+}

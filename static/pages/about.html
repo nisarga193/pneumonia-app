@@ -1,0 +1,103 @@
+<!-- ============================================================
+     PneumoScan AI — About Page
+     File: static/pages/about.html  (partial — included in index.html)
+     ============================================================
+     Contains:
+       1. How It Works    → 5-step pipeline explanation
+       2. Model Performance → accuracy + recall metrics (dynamic)
+       3. Architecture    → DenseNet-121 + Grad-CAM explanation
+       4. Dataset & Training → augmentation + optimizer details
+       5. Clinical Disclaimer banner
+     Dynamic metric values filled by: static/js/about.js → loadAbout()
+     ============================================================ -->
+
+<div class="page" id="page-about">
+
+  <!-- Page header -->
+  <div class="page-hdr">
+    <div class="page-title">About This System</div>
+    <div class="page-sub">Model details, pipeline and disclaimers</div>
+  </div>
+
+  <!-- 2x2 info grid -->
+  <div class="about-grid">
+
+    <!-- Card 1: Pipeline steps -->
+    <div class="about-card">
+      <h3>How It Works</h3>
+      <div class="pipe-step">
+        <div class="step-n">1</div>
+        <div class="step-t"><strong>Upload</strong> — Doctor uploads a chest X-ray (JPEG/PNG)</div>
+      </div>
+      <div class="pipe-step">
+        <div class="step-n">2</div>
+        <div class="step-t"><strong>Preprocess</strong> — Resized to 224×224, normalized with ImageNet stats</div>
+      </div>
+      <div class="pipe-step">
+        <div class="step-n">3</div>
+        <div class="step-t"><strong>Classify</strong> — DenseNet-121 outputs 3-class softmax probabilities</div>
+      </div>
+      <div class="pipe-step">
+        <div class="step-n">4</div>
+        <div class="step-t"><strong>Grad-CAM</strong> — Gradients of predicted class flow back to denseblock4 to generate heatmap</div>
+      </div>
+      <div class="pipe-step">
+        <div class="step-n">5</div>
+        <div class="step-t"><strong>Display</strong> — Original X-ray + red heatmap overlay shown for doctor verification</div>
+      </div>
+    </div>
+
+    <!-- Card 2: Model performance metrics (values populated by about.js) -->
+    <div class="about-card">
+      <h3>Model Performance</h3>
+      <p>Trained on 16,700+ chest X-rays. Tuned with weighted loss for maximum sensitivity to minimize false negatives.</p>
+      <div class="perf-grid">
+        <div class="perf-item">
+          <div class="perf-lbl">Test Accuracy</div>
+          <div class="perf-val" id="pa-acc">—</div>
+        </div>
+        <div class="perf-item">
+          <div class="perf-lbl">Macro Recall</div>
+          <div class="perf-val" id="pa-rec">—</div>
+        </div>
+        <div class="perf-item">
+          <div class="perf-lbl">Bacterial Recall</div>
+          <div class="perf-val" id="pa-brec">—</div>
+        </div>
+        <div class="perf-item">
+          <div class="perf-lbl">Viral Recall</div>
+          <div class="perf-val" id="pa-vrec">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: Architecture details -->
+    <div class="about-card">
+      <h3>Architecture</h3>
+      <p>DenseNet-121 (ImageNet pretrained) with fine-tuned denseblock3 &amp; 4. Custom 3-class head with dropout regularization.</p>
+      <p>Training used Weighted Random Sampler + class-weighted CrossEntropy (1.5× boost for pneumonia) to enforce high recall.</p>
+      <p>Grad-CAM hooks into
+        <code style="font-family:'DM Mono',monospace;font-size:0.8em;color:var(--accent)">features.denseblock4</code>
+        to produce spatial activation maps showing which lung region the model focused on.
+      </p>
+    </div>
+
+    <!-- Card 4: Dataset and training details -->
+    <div class="about-card">
+      <h3>Dataset &amp; Training</h3>
+      <p>16,700+ X-rays across 3 classes: Normal, Bacterial Pneumonia, Viral Pneumonia.</p>
+      <p>Augmentations: random crop, horizontal flip, rotation ±10°, affine translate, brightness/contrast jitter.</p>
+      <p>Optimizer: AdamW with cosine annealing LR schedule. Separate learning rates — head: 1e-3, backbone: 1e-4. Early stopping based on macro recall, not just accuracy.</p>
+    </div>
+
+  </div>
+
+  <!-- Clinical disclaimer -->
+  <div class="warn-banner">
+    ⚠️ <strong>Clinical Disclaimer:</strong> PneumoScan AI is an assistive tool only.
+    It is not a substitute for professional medical diagnosis. All results must be
+    reviewed and confirmed by a qualified physician before any clinical decisions are made.
+    False negatives and false positives are possible.
+  </div>
+
+</div>

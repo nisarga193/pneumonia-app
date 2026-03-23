@@ -1,0 +1,144 @@
+<!-- ============================================================
+     PneumoScan AI — New Scan Page
+     File: static/pages/scan.html  (partial — included in index.html)
+     ============================================================
+     Contains:
+       1. Upload zone      → drag-and-drop or click to upload X-ray
+       2. Patient info form → name, ID, notes
+       3. Analyze button   → triggers runScan() in scan.js
+       4. Result panel     → shown after analysis completes:
+            - Original X-ray vs Grad-CAM heatmap (side by side)
+            - Class probability bars
+            - Verdict + confidence
+            - Patient metadata
+     All logic handled by: static/js/scan.js
+     ============================================================ -->
+
+<div class="page" id="page-scan">
+
+  <!-- Page header -->
+  <div class="page-hdr">
+    <div class="page-title">New Scan</div>
+    <div class="page-sub">Upload a chest X-ray for AI-assisted diagnosis</div>
+  </div>
+
+  <!-- Upload + Patient Info side by side -->
+  <div class="scan-grid">
+
+    <!-- Left: X-ray upload drop zone -->
+    <div class="upload-card">
+      <div class="card-ttl">Upload X-Ray</div>
+      <div class="drop-zone" id="drop-zone">
+        <input type="file" id="file-input" accept="image/*"/>
+        <div class="drop-icon">🫁</div>
+        <div class="drop-txt"><strong>Click or drag</strong> to upload</div>
+        <div class="drop-hint">JPEG · PNG · BMP</div>
+      </div>
+      <!-- Preview of selected image -->
+      <img id="prev-img" class="prev-img" alt="X-ray preview"/>
+    </div>
+
+    <!-- Right: Patient info form -->
+    <div class="upload-card">
+      <div class="card-ttl">Patient Info</div>
+      <div class="form-grp">
+        <label class="form-lbl">Patient Name</label>
+        <input class="form-inp" type="text" id="p-name" placeholder="e.g. Ramesh Kumar"/>
+      </div>
+      <div class="form-grp">
+        <label class="form-lbl">Patient ID</label>
+        <input class="form-inp" type="text" id="p-id" placeholder="Auto-generated if blank"/>
+      </div>
+      <div class="form-grp">
+        <label class="form-lbl">Notes (optional)</label>
+        <input class="form-inp" type="text" id="p-notes" placeholder="Symptoms, remarks..."/>
+      </div>
+      <!-- Analyze button — calls runScan() in scan.js -->
+      <button class="btn-run" id="run-btn" onclick="runScan()">
+        <span id="btn-txt">Analyze X-Ray</span>
+        <div class="spin" id="btn-spin"></div>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Result panel — hidden until analysis completes, shown by renderResult() in scan.js -->
+  <div class="result-panel" id="result-panel">
+
+    <!-- Verdict header -->
+    <div class="res-hdr">
+      <div class="verdict-row">
+        <div class="v-dot" id="v-dot"></div>
+        <div>
+          <div class="v-lbl" id="v-lbl">—</div>
+          <div class="v-sub" id="v-sub">—</div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div class="v-conf" id="v-conf">—</div>
+        <div class="v-sub">Model confidence</div>
+      </div>
+    </div>
+
+    <!-- 3-column body: Images | Probabilities | Metadata -->
+    <div class="res-body">
+
+      <!-- Column 1: Original X-ray + Grad-CAM heatmap -->
+      <div class="res-col">
+        <div class="card-ttl" style="margin-bottom:0.65rem">Imaging</div>
+        <div class="img-pair">
+          <div class="img-wrap">
+            <img id="orig-img" src="" alt="Original X-ray"/>
+            <div class="img-lbl">Original</div>
+          </div>
+          <div class="img-wrap">
+            <img id="heat-img" src="" alt="Grad-CAM heatmap"/>
+            <div class="img-lbl">Grad-CAM</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 2: Class probability bars -->
+      <div class="res-col">
+        <div class="card-ttl" style="margin-bottom:0.65rem">Class Probabilities</div>
+        <div class="prob-bar">
+          <div class="pb-hdr">
+            <span class="pb-name">Normal</span>
+            <span class="pb-val" id="pp-n">—</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill bf-n" id="bf-n"></div></div>
+        </div>
+        <div class="prob-bar">
+          <div class="pb-hdr">
+            <span class="pb-name">Bacterial Pneumonia</span>
+            <span class="pb-val" id="pp-b">—</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill bf-b" id="bf-b"></div></div>
+        </div>
+        <div class="prob-bar">
+          <div class="pb-hdr">
+            <span class="pb-name">Viral Pneumonia</span>
+            <span class="pb-val" id="pp-v">—</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill bf-v" id="bf-v"></div></div>
+        </div>
+        <!-- Flag box: red for pneumonia, green for normal -->
+        <div id="flag-box"></div>
+      </div>
+
+      <!-- Column 3: Session metadata -->
+      <div class="res-col">
+        <div class="card-ttl" style="margin-bottom:0.65rem">Session Info</div>
+        <div class="meta-list">
+          <div class="meta-row"><span class="meta-k">Patient</span>  <span class="meta-v" id="m-patient">—</span></div>
+          <div class="meta-row"><span class="meta-k">Patient ID</span><span class="meta-v" id="m-pid">—</span></div>
+          <div class="meta-row"><span class="meta-k">Timestamp</span> <span class="meta-v" id="m-time">—</span></div>
+          <div class="meta-row"><span class="meta-k">Inference</span> <span class="meta-v" id="m-ms">—</span></div>
+          <div class="meta-row"><span class="meta-k">Model</span>     <span class="meta-v">DenseNet-121</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,47 @@
+<!-- ============================================================
+     PneumoScan AI — History Page
+     File: static/pages/history.html  (partial — included in index.html)
+     ============================================================
+     Contains:
+       1. Search bar    → filter by patient name or ID
+       2. Filter buttons → All / Pneumonia / Normal
+       3. Scrollable table with all scan records
+     All logic handled by: static/js/history.js
+       - loadHistory()   → fetches /api/history on page open
+       - renderHist()    → filters + renders table rows
+       - setFilter(f)    → updates active filter tab
+       - deleteRecord(id)→ DELETE /api/history/:id
+     ============================================================ -->
+
+<div class="page" id="page-history">
+
+  <!-- Page header -->
+  <div class="page-hdr">
+    <div class="page-title">Scan History</div>
+    <div class="page-sub">All previous diagnostic sessions</div>
+  </div>
+
+  <!-- Table card -->
+  <div class="hist-wrap">
+
+    <!-- Toolbar: search + filter buttons -->
+    <div class="hist-toolbar">
+      <!-- Search input — oninput triggers renderHist() in history.js -->
+      <input
+        class="search-inp"
+        id="search-inp"
+        placeholder="Search name or ID..."
+        oninput="renderHist()"
+      />
+      <!-- Filter buttons — call setFilter() in history.js -->
+      <button class="flt-btn active" id="f-all" onclick="setFilter('all')">All</button>
+      <button class="flt-btn"        id="f-pn"  onclick="setFilter('pn')">Pneumonia</button>
+      <button class="flt-btn"        id="f-ok"  onclick="setFilter('ok')">Normal</button>
+    </div>
+
+    <!-- Table body — populated by renderHist() in history.js -->
+    <div id="hist-body"></div>
+
+  </div>
+
+</div>

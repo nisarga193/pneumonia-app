@@ -1,0 +1,71 @@
+<!-- ============================================================
+     PneumoScan AI — Dashboard Page
+     File: static/pages/dashboard.html  (partial — included in index.html)
+     ============================================================
+     Contains:
+       1. Stat cards  → Total Scans / Normal / Bacterial / Viral
+       2. Charts row  → Class Distribution donut + Confidence bar
+       3. Recent Scans quick-view table
+     All data is populated by: static/js/dashboard.js → loadDashboard()
+     ============================================================ -->
+
+<div class="page active" id="page-dashboard">
+
+  <!-- Page header -->
+  <div class="page-hdr">
+    <div class="page-title">Dashboard</div>
+    <div class="page-sub">Overview of all diagnostic sessions</div>
+  </div>
+
+  <!-- 1. Stat cards -->
+  <div class="stat-row">
+    <div class="stat s-blue">
+      <div class="stat-lbl">Total Scans</div>
+      <div class="stat-val" id="s-total">—</div>
+      <div class="stat-note">All time</div>
+    </div>
+    <div class="stat s-green">
+      <div class="stat-lbl">Normal</div>
+      <div class="stat-val" id="s-normal">—</div>
+      <div class="stat-note">No infection</div>
+    </div>
+    <div class="stat s-orange">
+      <div class="stat-lbl">Bacterial</div>
+      <div class="stat-val" id="s-bacterial">—</div>
+      <div class="stat-note">Bacterial pneumonia</div>
+    </div>
+    <div class="stat s-purple">
+      <div class="stat-lbl">Viral</div>
+      <div class="stat-val" id="s-viral">—</div>
+      <div class="stat-note">Viral pneumonia</div>
+    </div>
+  </div>
+
+  <!-- 2. Charts row -->
+  <div class="charts-row">
+
+    <!-- Class Distribution donut chart — drawn by drawDonut() in charts.js -->
+    <div class="chart-card">
+      <div class="card-ttl">Class Distribution</div>
+      <div class="chart-box" id="donut-box">
+        <canvas id="chart-donut"></canvas>
+      </div>
+    </div>
+
+    <!-- Recent confidence bar chart — drawn by drawBars() in charts.js -->
+    <div class="chart-card">
+      <div class="card-ttl">Recent Scan Confidence</div>
+      <div class="chart-box" id="bar-box">
+        <canvas id="chart-conf"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 3. Recent scans table — rendered by drawRecentTable() in dashboard.js -->
+  <div class="recent-card">
+    <div class="card-ttl" style="margin-bottom:0.75rem">Recent Scans — Quick View</div>
+    <div id="dash-recent"></div>
+  </div>
+
+</div>
