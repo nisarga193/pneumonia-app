@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<!--
+  <!--
   ============================================================
   PneumoScan AI — Main Entry Point
   File: static/index.html
@@ -20,275 +21,349 @@
          js/app.js        → navigation, toast, init (load LAST)
   ============================================================
 -->
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>PneumoScan AI — Diagnostic System</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PneumoScan AI — Diagnostic System</title>
 
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
 
-<!-- Main stylesheet -->
-<link rel="stylesheet" href="css/styles.css"/>
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
+
 <body>
 
-<!-- ── SIDEBAR (shared across all pages) ──────────────────── -->
-<aside class="sidebar">
-  <div class="logo">
-    <div class="logo-name">PneumoScan AI</div>
-    <div class="logo-sub">Diagnostic Assistant v1.0</div>
-  </div>
-
-  <nav class="nav">
-    <button class="nav-item active" onclick="showPage('dashboard')" id="nav-dashboard">
-      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
-        <rect x="1" y="1" width="6" height="6" rx="1.2"/>
-        <rect x="9" y="1" width="6" height="6" rx="1.2"/>
-        <rect x="1" y="9" width="6" height="6" rx="1.2"/>
-        <rect x="9" y="9" width="6" height="6" rx="1.2"/>
-      </svg>
-      Dashboard
-    </button>
-
-    <button class="nav-item" onclick="showPage('scan')" id="nav-scan">
-      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
-        <circle cx="8" cy="7" r="5"/>
-        <path d="M8 5v2l1.5 1.5"/>
-        <path d="M3 13l2-2M13 13l-2-2"/>
-      </svg>
-      New Scan
-    </button>
-
-    <button class="nav-item" onclick="showPage('history')" id="nav-history">
-      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
-        <path d="M2 4h12M2 8h8M2 12h5"/>
-      </svg>
-      History
-    </button>
-
-    <button class="nav-item" onclick="showPage('about')" id="nav-about">
-      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
-        <circle cx="8" cy="8" r="6"/>
-        <path d="M8 7.5v4M8 5.5v.5"/>
-      </svg>
-      About
-    </button>
-  </nav>
-
-  <div class="sidebar-foot">
-    <div class="model-pill">
-      <span>Model</span>
-      DenseNet-121
+  <!-- ── SIDEBAR (shared across all pages) ──────────────────── -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-name">PneumoScan AI</div>
+      <div class="logo-sub">Diagnostic Assistant v1.0</div>
     </div>
-  </div>
-</aside>
 
-<!-- ── MAIN CONTENT AREA ──────────────────────────────────── -->
-<main class="main">
+    <nav class="nav">
+      <button class="nav-item active" onclick="showPage('dashboard')" id="nav-dashboard">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+          <rect x="1" y="1" width="6" height="6" rx="1.2" />
+          <rect x="9" y="1" width="6" height="6" rx="1.2" />
+          <rect x="1" y="9" width="6" height="6" rx="1.2" />
+          <rect x="9" y="9" width="6" height="6" rx="1.2" />
+        </svg>
+        Dashboard
+      </button>
 
-  <!-- Each page section lives in its own file under pages/ -->
+      <button class="nav-item" onclick="showPage('scan')" id="nav-scan">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="8" cy="7" r="5" />
+          <path d="M8 5v2l1.5 1.5" />
+          <path d="M3 13l2-2M13 13l-2-2" />
+        </svg>
+        New Scan
+      </button>
 
-  <!-- DASHBOARD PAGE → logic in js/dashboard.js -->
-  <!-- pages/dashboard.html -->
-  <div class="page active" id="page-dashboard">
-    <div class="page-hdr">
-      <div class="page-title">Dashboard</div>
-      <div class="page-sub">Overview of all diagnostic sessions</div>
-    </div>
-    <div class="stat-row">
-      <div class="stat s-blue">
-        <div class="stat-lbl">Total Scans</div>
-        <div class="stat-val" id="s-total">—</div>
-        <div class="stat-note">All time</div>
-      </div>
-      <div class="stat s-green">
-        <div class="stat-lbl">Normal</div>
-        <div class="stat-val" id="s-normal">—</div>
-        <div class="stat-note">No infection</div>
-      </div>
-      <div class="stat s-orange">
-        <div class="stat-lbl">Bacterial</div>
-        <div class="stat-val" id="s-bacterial">—</div>
-        <div class="stat-note">Bacterial pneumonia</div>
-      </div>
-      <div class="stat s-purple">
-        <div class="stat-lbl">Viral</div>
-        <div class="stat-val" id="s-viral">—</div>
-        <div class="stat-note">Viral pneumonia</div>
+      <button class="nav-item" onclick="showPage('history')" id="nav-history">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M2 4h12M2 8h8M2 12h5" />
+        </svg>
+        History
+      </button>
+
+      <button class="nav-item" onclick="showPage('about')" id="nav-about">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="8" cy="8" r="6" />
+          <path d="M8 7.5v4M8 5.5v.5" />
+        </svg>
+        About
+      </button>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="model-pill">
+        <span>Model</span>
+        DenseNet-121
       </div>
     </div>
-    <div class="charts-row">
-      <div class="chart-card">
-        <div class="card-ttl">Class Distribution</div>
-        <div class="chart-box" id="donut-box"><canvas id="chart-donut"></canvas></div>
-      </div>
-      <div class="chart-card">
-        <div class="card-ttl">Recent Scan Confidence</div>
-        <div class="chart-box" id="bar-box"><canvas id="chart-conf"></canvas></div>
-      </div>
-    </div>
-    <div class="recent-card">
-      <div class="card-ttl" style="margin-bottom:0.75rem">Recent Scans — Quick View</div>
-      <div id="dash-recent"></div>
-    </div>
-  </div>
+  </aside>
 
-  <!-- NEW SCAN PAGE → logic in js/scan.js -->
-  <!-- pages/scan.html -->
-  <div class="page" id="page-scan">
-    <div class="page-hdr">
-      <div class="page-title">New Scan</div>
-      <div class="page-sub">Upload a chest X-ray for AI-assisted diagnosis</div>
-    </div>
-    <div class="scan-grid">
-      <div class="upload-card">
-        <div class="card-ttl">Upload X-Ray</div>
-        <div class="drop-zone" id="drop-zone">
-          <input type="file" id="file-input" accept="image/*"/>
-          <div class="drop-icon">🫁</div>
-          <div class="drop-txt"><strong>Click or drag</strong> to upload</div>
-          <div class="drop-hint">JPEG · PNG · BMP</div>
+  <!-- ── MAIN CONTENT AREA ──────────────────────────────────── -->
+  <main class="main">
+
+    <!-- Each page section lives in its own file under pages/ -->
+
+    <!-- DASHBOARD PAGE → logic in js/dashboard.js -->
+    <!-- pages/dashboard.html -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-hdr">
+        <div class="page-title">Dashboard</div>
+        <div class="page-sub">Overview of all diagnostic sessions</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat s-blue">
+          <div class="stat-lbl">Total Scans</div>
+          <div class="stat-val" id="s-total">—</div>
+          <div class="stat-note">All time</div>
         </div>
-        <img id="prev-img" class="prev-img" alt="X-ray preview"/>
+        <div class="stat s-green">
+          <div class="stat-lbl">Normal</div>
+          <div class="stat-val" id="s-normal">—</div>
+          <div class="stat-note">No infection</div>
+        </div>
+        <div class="stat s-orange">
+          <div class="stat-lbl">Bacterial</div>
+          <div class="stat-val" id="s-bacterial">—</div>
+          <div class="stat-note">Bacterial pneumonia</div>
+        </div>
+        <div class="stat s-purple">
+          <div class="stat-lbl">Viral</div>
+          <div class="stat-val" id="s-viral">—</div>
+          <div class="stat-note">Viral pneumonia</div>
+        </div>
       </div>
-      <div class="upload-card">
-        <div class="card-ttl">Patient Info</div>
-        <div class="form-grp">
-          <label class="form-lbl">Patient Name</label>
-          <input class="form-inp" type="text" id="p-name" placeholder="e.g. Ramesh Kumar"/>
+      <div class="charts-row">
+        <div class="chart-card">
+          <div class="card-ttl">Class Distribution</div>
+          <div class="chart-box" id="donut-box"><canvas id="chart-donut"></canvas></div>
         </div>
-        <div class="form-grp">
-          <label class="form-lbl">Patient ID</label>
-          <input class="form-inp" type="text" id="p-id" placeholder="Auto-generated if blank"/>
+        <div class="chart-card">
+          <div class="card-ttl">Recent Scan Confidence</div>
+          <div class="chart-box" id="bar-box"><canvas id="chart-conf"></canvas></div>
         </div>
-        <div class="form-grp">
-          <label class="form-lbl">Notes (optional)</label>
-          <input class="form-inp" type="text" id="p-notes" placeholder="Symptoms, remarks..."/>
-        </div>
-        <button class="btn-run" id="run-btn" onclick="runScan()">
-          <span id="btn-txt">Analyze X-Ray</span>
-          <div class="spin" id="btn-spin"></div>
-        </button>
+      </div>
+      <div class="recent-card">
+        <div class="card-ttl" style="margin-bottom:0.75rem">Recent Scans — Quick View</div>
+        <div id="dash-recent"></div>
       </div>
     </div>
-    <div class="result-panel" id="result-panel">
-      <div class="res-hdr">
-        <div class="verdict-row">
-          <div class="v-dot" id="v-dot"></div>
-          <div>
-            <div class="v-lbl" id="v-lbl">—</div>
-            <div class="v-sub" id="v-sub">—</div>
+
+    <!-- NEW SCAN PAGE → logic in js/scan.js -->
+    <!-- pages/scan.html -->
+    <div class="page" id="page-scan">
+      <div class="page-hdr">
+        <div class="page-title">New Scan</div>
+        <div class="page-sub">Upload a chest X-ray for AI-assisted diagnosis</div>
+      </div>
+      <div class="scan-grid">
+        <div class="upload-card">
+          <div class="card-ttl">Upload X-Ray</div>
+          <div class="drop-zone" id="drop-zone">
+            <input type="file" id="file-input" accept="image/*" />
+            <div class="drop-icon">🫁</div>
+            <div class="drop-txt"><strong>Click or drag</strong> to upload</div>
+            <div class="drop-hint">JPEG · PNG · BMP</div>
+          </div>
+          <img id="prev-img" class="prev-img" alt="X-ray preview" />
+        </div>
+        <div class="upload-card">
+          <div class="card-ttl">Patient Info</div>
+          <div class="form-grp">
+            <label class="form-lbl">Patient Name</label>
+            <input class="form-inp" type="text" id="p-name" placeholder="e.g. Ramesh Kumar" />
+          </div>
+          <div class="form-grp">
+            <label class="form-lbl">Patient ID</label>
+            <input class="form-inp" type="text" id="p-id" placeholder="Auto-generated if blank" />
+          </div>
+          <div class="form-grp">
+            <label class="form-lbl">Notes (optional)</label>
+            <input class="form-inp" type="text" id="p-notes" placeholder="Symptoms, remarks..." />
+          </div>
+          <button class="btn-run" id="run-btn" onclick="runScan()">
+            <span id="btn-txt">Analyze X-Ray</span>
+            <div class="spin" id="btn-spin"></div>
+          </button>
+        </div>
+      </div>
+      <div class="result-panel" id="result-panel">
+
+        <!-- Always shown: verdict header -->
+        <div class="res-hdr">
+          <div class="verdict-row">
+            <div class="v-dot" id="v-dot"></div>
+            <div>
+              <div class="v-lbl" id="v-lbl">—</div>
+              <div class="v-sub" id="v-sub">—</div>
+            </div>
+          </div>
+          <div style="text-align:right">
+            <div class="v-conf" id="v-conf">—</div>
+            <div class="v-sub">Model confidence</div>
           </div>
         </div>
-        <div style="text-align:right">
-          <div class="v-conf" id="v-conf">—</div>
-          <div class="v-sub">Model confidence</div>
+
+        <div class="res-body">
+
+          <!-- sec-images: shown for ALL states (invalid=1 img, normal=1 img, pneumonia=2 imgs) -->
+          <div class="res-col" id="sec-images" style="display:none">
+            <div class="card-ttl" style="margin-bottom:0.65rem">Imaging</div>
+            <!-- img-pair-wrap: grid cols set dynamically by scan.js -->
+            <div class="img-pair" id="img-pair-wrap">
+              <div class="img-wrap">
+                <img id="orig-img" src="" alt="X-ray" />
+                <div class="img-lbl">Original</div>
+              </div>
+              <!-- heat-img-wrap: hidden for invalid + normal, shown for pneumonia only -->
+              <div class="img-wrap" id="heat-img-wrap" style="display:none">
+                <img id="heat-img" src="" alt="Grad-CAM" />
+                <div class="img-lbl">Grad-CAM</div>
+              </div>
+            </div>
+            <!-- flag box lives under images -->
+            <div id="flag-box" class="flag-box" style="margin-top:0.9rem"></div>
+          </div>
+
+          <!-- sec-probs: hidden for invalid images, shown for normal + pneumonia -->
+          <div class="res-col" id="sec-probs" style="display:none">
+            <div class="card-ttl" style="margin-bottom:0.65rem">Class Probabilities</div>
+            <div class="prob-bar">
+              <div class="pb-hdr"><span class="pb-name">Normal</span><span class="pb-val" id="pp-n">—</span></div>
+              <div class="bar-track">
+                <div class="bar-fill bf-n" id="bf-n"></div>
+              </div>
+            </div>
+            <div class="prob-bar">
+              <div class="pb-hdr"><span class="pb-name">Bacterial Pneumonia</span><span class="pb-val"
+                  id="pp-b">—</span></div>
+              <div class="bar-track">
+                <div class="bar-fill bf-b" id="bf-b"></div>
+              </div>
+            </div>
+            <div class="prob-bar">
+              <div class="pb-hdr"><span class="pb-name">Viral Pneumonia</span><span class="pb-val" id="pp-v">—</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill bf-v" id="bf-v"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- sec-meta: shown for all states -->
+          <div class="res-col" id="sec-meta" style="display:none">
+            <div class="card-ttl" style="margin-bottom:0.65rem">Session Info</div>
+            <div class="meta-list">
+              <div class="meta-row"><span class="meta-k">Patient</span> <span class="meta-v" id="m-patient">—</span>
+              </div>
+              <div class="meta-row"><span class="meta-k">Patient ID</span><span class="meta-v" id="m-pid">—</span></div>
+              <div class="meta-row"><span class="meta-k">Timestamp</span> <span class="meta-v" id="m-time">—</span>
+              </div>
+              <div class="meta-row"><span class="meta-k">Inference</span> <span class="meta-v" id="m-ms">—</span></div>
+              <div class="meta-row"><span class="meta-k">Model</span> <span class="meta-v">DenseNet-121</span></div>
+            </div>
+          </div>
+
         </div>
       </div>
-      <div class="res-body">
-        <div class="res-col">
-          <div class="card-ttl" style="margin-bottom:0.65rem">Imaging</div>
-          <div class="img-pair">
-            <div class="img-wrap"><img id="orig-img" src="" alt=""/><div class="img-lbl">Original</div></div>
-            <div class="img-wrap"><img id="heat-img" src="" alt=""/><div class="img-lbl">Grad-CAM</div></div>
+    </div>
+
+    <!-- HISTORY PAGE → logic in js/history.js -->
+    <!-- pages/history.html -->
+    <div class="page" id="page-history">
+      <div class="page-hdr">
+        <div class="page-title">Scan History</div>
+        <div class="page-sub">All previous diagnostic sessions</div>
+      </div>
+      <div class="hist-wrap">
+        <div class="hist-toolbar">
+          <input class="search-inp" id="search-inp" placeholder="Search name or ID..." oninput="renderHist()" />
+          <button class="flt-btn active" id="f-all" onclick="setFilter('all')">All</button>
+          <button class="flt-btn" id="f-pn" onclick="setFilter('pn')">Pneumonia</button>
+          <button class="flt-btn" id="f-ok" onclick="setFilter('ok')">Normal</button>
+        </div>
+        <div id="hist-body"></div>
+      </div>
+    </div>
+
+    <!-- ABOUT PAGE → logic in js/about.js -->
+    <!-- pages/about.html -->
+    <div class="page" id="page-about">
+      <div class="page-hdr">
+        <div class="page-title">About This System</div>
+        <div class="page-sub">Model details, pipeline and disclaimers</div>
+      </div>
+      <div class="about-grid">
+        <div class="about-card">
+          <h3>How It Works</h3>
+          <div class="pipe-step">
+            <div class="step-n">1</div>
+            <div class="step-t"><strong>Upload</strong> — Doctor uploads a chest X-ray (JPEG/PNG)</div>
+          </div>
+          <div class="pipe-step">
+            <div class="step-n">2</div>
+            <div class="step-t"><strong>Preprocess</strong> — Resized to 224×224, normalized with ImageNet stats</div>
+          </div>
+          <div class="pipe-step">
+            <div class="step-n">3</div>
+            <div class="step-t"><strong>Classify</strong> — DenseNet-121 outputs 3-class softmax probabilities</div>
+          </div>
+          <div class="pipe-step">
+            <div class="step-n">4</div>
+            <div class="step-t"><strong>Grad-CAM</strong> — Gradients flow back to denseblock4 to generate heatmap</div>
+          </div>
+          <div class="pipe-step">
+            <div class="step-n">5</div>
+            <div class="step-t"><strong>Display</strong> — X-ray + red heatmap overlay shown for doctor verification
+            </div>
           </div>
         </div>
-        <div class="res-col">
-          <div class="card-ttl" style="margin-bottom:0.65rem">Class Probabilities</div>
-          <div class="prob-bar"><div class="pb-hdr"><span class="pb-name">Normal</span><span class="pb-val" id="pp-n">—</span></div><div class="bar-track"><div class="bar-fill bf-n" id="bf-n"></div></div></div>
-          <div class="prob-bar"><div class="pb-hdr"><span class="pb-name">Bacterial Pneumonia</span><span class="pb-val" id="pp-b">—</span></div><div class="bar-track"><div class="bar-fill bf-b" id="bf-b"></div></div></div>
-          <div class="prob-bar"><div class="pb-hdr"><span class="pb-name">Viral Pneumonia</span><span class="pb-val" id="pp-v">—</span></div><div class="bar-track"><div class="bar-fill bf-v" id="bf-v"></div></div></div>
-          <div id="flag-box"></div>
-        </div>
-        <div class="res-col">
-          <div class="card-ttl" style="margin-bottom:0.65rem">Session Info</div>
-          <div class="meta-list">
-            <div class="meta-row"><span class="meta-k">Patient</span><span class="meta-v" id="m-patient">—</span></div>
-            <div class="meta-row"><span class="meta-k">Patient ID</span><span class="meta-v" id="m-pid">—</span></div>
-            <div class="meta-row"><span class="meta-k">Timestamp</span><span class="meta-v" id="m-time">—</span></div>
-            <div class="meta-row"><span class="meta-k">Inference</span><span class="meta-v" id="m-ms">—</span></div>
-            <div class="meta-row"><span class="meta-k">Model</span><span class="meta-v">DenseNet-121</span></div>
+        <div class="about-card">
+          <h3>Model Performance</h3>
+          <p>Trained on 16,700+ chest X-rays. Weighted loss for maximum sensitivity.</p>
+          <div class="perf-grid">
+            <div class="perf-item">
+              <div class="perf-lbl">Test Accuracy</div>
+              <div class="perf-val" id="pa-acc">—</div>
+            </div>
+            <div class="perf-item">
+              <div class="perf-lbl">Macro Recall</div>
+              <div class="perf-val" id="pa-rec">—</div>
+            </div>
+            <div class="perf-item">
+              <div class="perf-lbl">Bacterial Recall</div>
+              <div class="perf-val" id="pa-brec">—</div>
+            </div>
+            <div class="perf-item">
+              <div class="perf-lbl">Viral Recall</div>
+              <div class="perf-val" id="pa-vrec">—</div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- HISTORY PAGE → logic in js/history.js -->
-  <!-- pages/history.html -->
-  <div class="page" id="page-history">
-    <div class="page-hdr">
-      <div class="page-title">Scan History</div>
-      <div class="page-sub">All previous diagnostic sessions</div>
-    </div>
-    <div class="hist-wrap">
-      <div class="hist-toolbar">
-        <input class="search-inp" id="search-inp" placeholder="Search name or ID..." oninput="renderHist()"/>
-        <button class="flt-btn active" id="f-all" onclick="setFilter('all')">All</button>
-        <button class="flt-btn" id="f-pn" onclick="setFilter('pn')">Pneumonia</button>
-        <button class="flt-btn" id="f-ok" onclick="setFilter('ok')">Normal</button>
-      </div>
-      <div id="hist-body"></div>
-    </div>
-  </div>
-
-  <!-- ABOUT PAGE → logic in js/about.js -->
-  <!-- pages/about.html -->
-  <div class="page" id="page-about">
-    <div class="page-hdr">
-      <div class="page-title">About This System</div>
-      <div class="page-sub">Model details, pipeline and disclaimers</div>
-    </div>
-    <div class="about-grid">
-      <div class="about-card">
-        <h3>How It Works</h3>
-        <div class="pipe-step"><div class="step-n">1</div><div class="step-t"><strong>Upload</strong> — Doctor uploads a chest X-ray (JPEG/PNG)</div></div>
-        <div class="pipe-step"><div class="step-n">2</div><div class="step-t"><strong>Preprocess</strong> — Resized to 224×224, normalized with ImageNet stats</div></div>
-        <div class="pipe-step"><div class="step-n">3</div><div class="step-t"><strong>Classify</strong> — DenseNet-121 outputs 3-class softmax probabilities</div></div>
-        <div class="pipe-step"><div class="step-n">4</div><div class="step-t"><strong>Grad-CAM</strong> — Gradients flow back to denseblock4 to generate heatmap</div></div>
-        <div class="pipe-step"><div class="step-n">5</div><div class="step-t"><strong>Display</strong> — X-ray + red heatmap overlay shown for doctor verification</div></div>
-      </div>
-      <div class="about-card">
-        <h3>Model Performance</h3>
-        <p>Trained on 16,700+ chest X-rays. Weighted loss for maximum sensitivity.</p>
-        <div class="perf-grid">
-          <div class="perf-item"><div class="perf-lbl">Test Accuracy</div><div class="perf-val" id="pa-acc">—</div></div>
-          <div class="perf-item"><div class="perf-lbl">Macro Recall</div><div class="perf-val" id="pa-rec">—</div></div>
-          <div class="perf-item"><div class="perf-lbl">Bacterial Recall</div><div class="perf-val" id="pa-brec">—</div></div>
-          <div class="perf-item"><div class="perf-lbl">Viral Recall</div><div class="perf-val" id="pa-vrec">—</div></div>
+        <div class="about-card">
+          <h3>Architecture</h3>
+          <p>DenseNet-121 pretrained on ImageNet. Fine-tuned denseblock3 &amp; 4. Custom 3-class head with dropout.</p>
+          <p>Weighted Random Sampler + 1.5× CrossEntropy boost for pneumonia classes.</p>
+          <p>Grad-CAM target layer: <code
+              style="font-family:'DM Mono',monospace;font-size:0.8em;color:var(--accent)">features.denseblock4</code>
+          </p>
+        </div>
+        <div class="about-card">
+          <h3>Dataset &amp; Training</h3>
+          <p>16,700+ X-rays: Normal, Bacterial Pneumonia, Viral Pneumonia.</p>
+          <p>Augmentations: random crop, flip, rotation ±10°, affine, contrast jitter.</p>
+          <p>AdamW + cosine LR annealing. Head LR: 1e-3, Backbone LR: 1e-4. Early stopping on macro recall.</p>
         </div>
       </div>
-      <div class="about-card">
-        <h3>Architecture</h3>
-        <p>DenseNet-121 pretrained on ImageNet. Fine-tuned denseblock3 &amp; 4. Custom 3-class head with dropout.</p>
-        <p>Weighted Random Sampler + 1.5× CrossEntropy boost for pneumonia classes.</p>
-        <p>Grad-CAM target layer: <code style="font-family:'DM Mono',monospace;font-size:0.8em;color:var(--accent)">features.denseblock4</code></p>
-      </div>
-      <div class="about-card">
-        <h3>Dataset &amp; Training</h3>
-        <p>16,700+ X-rays: Normal, Bacterial Pneumonia, Viral Pneumonia.</p>
-        <p>Augmentations: random crop, flip, rotation ±10°, affine, contrast jitter.</p>
-        <p>AdamW + cosine LR annealing. Head LR: 1e-3, Backbone LR: 1e-4. Early stopping on macro recall.</p>
+      <div class="warn-banner">
+        ⚠️ <strong>Clinical Disclaimer:</strong> PneumoScan AI is an assistive tool only. Not a substitute for
+        professional medical diagnosis. All results must be reviewed by a qualified physician before clinical decisions
+        are made.
       </div>
     </div>
-    <div class="warn-banner">
-      ⚠️ <strong>Clinical Disclaimer:</strong> PneumoScan AI is an assistive tool only. Not a substitute for professional medical diagnosis. All results must be reviewed by a qualified physician before clinical decisions are made.
-    </div>
-  </div>
 
-</main>
+  </main>
 
-<!-- Toast notification (shared) -->
-<div class="toast" id="toast"></div>
+  <!-- Toast notification (shared) -->
+  <div class="toast" id="toast"></div>
 
-<!-- ── JavaScript files — load in this exact order ──────── -->
-<script src="js/api.js"></script>        <!-- API calls to Flask backend     -->
-<script src="js/charts.js"></script>     <!-- Canvas chart drawing functions  -->
-<script src="js/dashboard.js"></script>  <!-- Dashboard page logic            -->
-<script src="js/scan.js"></script>       <!-- New Scan + result logic         -->
-<script src="js/history.js"></script>    <!-- History table + filter logic    -->
-<script src="js/about.js"></script>      <!-- About page metric loader        -->
-<script src="js/app.js"></script>        <!-- Navigation + init — LOAD LAST   -->
+  <!-- ── JavaScript files — load in this exact order ──────── -->
+  <script src="js/api.js"></script> <!-- API calls to Flask backend     -->
+  <script src="js/charts.js"></script> <!-- Canvas chart drawing functions  -->
+  <script src="js/dashboard.js"></script> <!-- Dashboard page logic            -->
+  <script src="js/scan.js"></script> <!-- New Scan + result logic         -->
+  <script src="js/history.js"></script> <!-- History table + filter logic    -->
+  <script src="js/about.js"></script> <!-- About page metric loader        -->
+  <script src="js/app.js"></script> <!-- Navigation + init — LOAD LAST   -->
 
 </body>
+
 </html>
